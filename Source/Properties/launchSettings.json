@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LittleDebugger.Tools.TemplateTransformer": {
+      "commandName": "Project",
+      "commandLineArgs": "--from testing --to ing"
+    }
+  }
+}
