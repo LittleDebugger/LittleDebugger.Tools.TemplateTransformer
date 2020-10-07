@@ -80,6 +80,12 @@ namespace LittleDebugger.Tools.TemplateTransformer
                     File.Move(fileName, translatedFileName.translation);
                 }
 
+                if (translatedFileName.translation.EndsWith(".DLL", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    // Probably going to have to exclude other types.
+                    continue;
+                }
+
                 var fileContents = (await File.ReadAllLinesAsync(translatedFileName.translation))
                     .ToArray();
 
@@ -104,7 +110,14 @@ namespace LittleDebugger.Tools.TemplateTransformer
 
                 if (changes)
                 {
-                    await File.WriteAllLinesAsync(translatedFileName.translation, fileContents);
+                    try
+                    {
+                        await File.WriteAllLinesAsync(translatedFileName.translation, fileContents);
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine($"Failed to save {translatedFileName.translation}!!");
+                    }
                 }
             }
         }
